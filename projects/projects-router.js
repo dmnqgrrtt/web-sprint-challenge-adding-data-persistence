@@ -11,14 +11,14 @@ router.post("/", (req, res) => {
             .insert(newProject)
             .then(id => {
                 db("projects")
-                .where({id})
-                .first()
-                .then(addedProject => {
-                    res.status(201).json(addedProject);
-                })
+                    .where({ id })
+                    .first()
+                    .then(addedProject => {
+                        res.status(201).json(addedProject);
+                    })
             })
             .catch(err => {
-                restart.status(500).json({ message: "We were unable to add that project" })
+                res.status(500).json({ message: "We were unable to add that project" })
             })
     } else {
         res.status(400).json({ message: "please provide a name for the project" })
@@ -26,14 +26,14 @@ router.post("/", (req, res) => {
 
 })
 
-router.get("/", (req,res) => {
+router.get("/", (req, res) => {
     db("projects")
-    .then(projects => {
-        res.status(200).json(projects);
-    })
-    .catch(err => {
-        res.status(500).json({message: "we were unable to retreive the projects"})
-    })
+        .then(projects => {
+            res.status(200).json(projects);
+        })
+        .catch(err => {
+            res.status(500).json({ message: "we were unable to retreive the projects" })
+        })
 })
 
 module.exports = router;
